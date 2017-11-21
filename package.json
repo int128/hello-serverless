@@ -12,5 +12,8 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "serverless": "^1.24.1"
+  },
+  "dependencies": {
+    "@slack/client": "^3.14.2"
   }
 }

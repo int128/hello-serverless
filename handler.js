@@ -1,16 +1,20 @@
 'use strict';
 
+const Slack = require('@slack/client');
+
 module.exports.hello = (event, context, callback) => {
-  const response = {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: 'Go Serverless v1.0! Your function executed successfully!',
-      input: event,
-    }),
-  };
+  const incomingWebhook = new Slack.IncomingWebhook(process.env.WEBHOOK);
 
-  callback(null, response);
-
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
+  incomingWebhook.send(
+    `\`\`\`\n${JSON.stringify(event)}\`\`\``,
+    (err, header, statusCode, body) => {
+      if (err) {
+        console.error(err);
+      }
+      callback(null, {
+        statusCode: statusCode,
+        body: body
+      });
+    }
+  );
 };
