@@ -5,3 +5,4 @@ package-lock.json
 
 # Serverless directories
 .serverless
+.webpack

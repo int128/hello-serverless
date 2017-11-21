@@ -1,19 +1,14 @@
-'use strict';
+import Slack from './slack';
 
-const Slack = require('./slack');
-
-function* processEvent(event) {
+async function processEvent(event) {
   const slack = new Slack(process.env.WEBHOOK);
-  
-  const sent = yield slack.send(`\`\`\`\n${JSON.stringify(event)}\`\`\``);
+
+  const sent = await slack.send(`\`\`\`\n${JSON.stringify(event)}\`\`\``);
   return sent;
 }
 
-module.exports.hello = (event, context, callback) => {
-  try {
-    const result = yield processEvent(event);
-    callback(null, result);
-  } catch(err) {
-    callback(err, null);
-  }
-};
+export function hello(event, context, callback) {
+  processEvent(event)
+    .then(value => callback(null, value))
+    .catch(err => callback(err, null));
+}

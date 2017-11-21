@@ -1,8 +1,6 @@
-'use strict';
+import SlackClient from '@slack/client';
 
-const SlackClient = require('@slack/client');
-
-module.exports = class Slack {
+export default class Slack {
   constructor(webhook) {
     this.incomingWebhook = new SlackClient.IncomingWebhook(webhook);
   }
